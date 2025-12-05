@@ -6,7 +6,7 @@ const { DOMParser } = require('xmldom');
 const xpath = require('xpath');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const dbConfig = {
 	host: process.env.DB_HOST || 'localhost',
@@ -15,54 +15,37 @@ const dbConfig = {
     database: process.env.DB_NAME || 'test',
     port: process.env.DB_PORT || 3306,
     decimalNumbers: true,
-    ssl: {
-        rejectUnauthorized: false
-    }
+    ssl: process.env.DB_HOST !== 'localhost' ? { rejectUnauthorized: false } : undefined
 };
 
 // Funcion para crear una base de datos
 async function initializeDatabase() {
-	try {
-		const connectionWithoutDB = await mysql.createConnection({
-			host: dbConfig.host,
-			user: dbConfig.user,
-			password: dbConfig.password,
-			decimalNumbers: dbConfig.decimalNumbers
-		});
+    try {
+        const connection = await mysql.createConnection(dbConfig);
+        console.log(`Conectado a la base de datos: ${dbConfig.database}`);
 
-		// Crear la base de datos si no existe
-		await connectionWithoutDB.execute(`CREATE DATABASE IF NOT EXISTS \`${dbConfig.database}\``);
-		console.log(`Base de datos '${dbConfig.database}' verificada/creada.`);
+        // Verificamos si existe la tabla
+        const [tables] = await connection.execute("SHOW TABLES LIKE 'productos'");
 
-		await connectionWithoutDB.end();
-
-		const connection = await mysql.createConnection(dbConfig);
-
-		const [tables] = await connection.execute(
-			"SHOW TABLES LIKE 'productos'"
-		);
-
-		if (tables.length === 0) {
-			await connection.execute(`
-				CREATE TABLE productos (
-					id INT AUTO_INCREMENT PRIMARY KEY,
-					nombre VARCHAR(255) NOT NULL,
-					precio DECIMAL(10, 2) NOT NULL,
-					stock INT NOT NULL,
-					historical_data TEXT
-				)
-			`);
-			console.log('Tabla creada exitosamente.');
-
-		} else {
-			console.log('La tabla ya existe.');
-		}
-
-		return connection;
-	} catch (err) {
-		console.error('Error al inicializar la base de datos:', err.message);
-		process.exit(1);
-	}
+        if (tables.length === 0) {
+            await connection.execute(`
+                CREATE TABLE productos (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    nombre VARCHAR(255) NOT NULL,
+                    precio DECIMAL(10, 2) NOT NULL,
+                    stock INT NOT NULL,
+                    historical_data TEXT
+                )
+            `);
+            console.log('Tabla "productos" creada automáticamente.');
+        } else {
+            console.log('La tabla ya existe.');
+        }
+        return connection;
+    } catch (err) {
+        console.error('Error al conectar a la BD:', err.message);
+        throw err;
+    }
 }
 
 async function connectToDatabase() {
