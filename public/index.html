@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    	<meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<title>Catálogo de Productos</title>
+    	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    	<div class="container">
+        	<h1>Catálogo de Productos</h1>
+
+        	<div class="product-form">
+            	<h2>Añadir/Editar Producto</h2>
+            	<input type="hidden" id="productId">
+            	<input type="text" id="productName" placeholder="Nombre del producto" required>
+            	<input type="number" id="productPrice" placeholder="Precio" step="0.01" required>
+            	<input type="number" id="productStock" placeholder="Stock" required>
+            	<textarea id="productHistoricalData" placeholder="Datos históricos (XML/Opcional)"></textarea>
+            	<button id="saveProductButton">Guardar Producto</button>
+            	<button id="cancelEditButton" style="display: none;">Cancelar Edición</button>
+        	</div>
+
+        	<div class="product-list">
+            	<h2>Productos Disponibles</h2>
+            	<ul id="productsContainer">
+                	</ul>
+        	</div>
+
+        	<div id="productDetailModal" class="modal">
+            	<div class="modal-content">
+                	<span class="close-button">&times;</span>
+                	<h3 id="modalProductName"></h3>
+                	<p>Precio: $<span id="modalProductPrice"></span></p>
+                	<p>Stock: <span id="modalProductStock"></span> unidades</p>
+                	<h4>Datos Históricos (XML Parseado):</h4>
+                	<pre id="modalHistoricalData"></pre>
+                	<h4>Último cambio de precio (XPath):</h4>
+                	<p id="modalLatestPriceChangeDate"></p>
+            	</div>
+        	</div>
+    	</div>
+
+    	<script src="script.js"></script>
+</body>
+</html>

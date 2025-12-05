@@ -1,0 +1,174 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    margin: 0;
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+.product-form, .product-list {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background-color: #fcfcfc;
+}
+
+.product-form input[type="text"],
+.product-form input[type="number"],
+.product-form textarea {
+    width: calc(100% - 22px); /* Ancho completo menos padding y borde */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.product-form textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.product-form button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.product-form button:hover {
+    background-color: #45a049;
+}
+
+#cancelEditButton {
+    background-color: #6c757d;
+}
+#cancelEditButton:hover {
+    background-color: #5a6268;
+}
+
+#productsContainer {
+    list-style: none;
+    padding: 0;
+}
+
+#productsContainer li {
+    background-color: #f9f9f9;
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+#productsContainer li:last-child {
+    border-bottom: none;
+}
+
+#productsContainer li span {
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+#productsContainer li .actions button {
+    background-color: #007bff; /* Ver */
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 8px;
+}
+#productsContainer li .actions button.edit-button {
+    background-color: #ffc107; /* Editar */
+}
+#productsContainer li .actions button.edit-button:hover {
+    background-color: #e0a800;
+}
+#productsContainer li .actions button.delete-button {
+    background-color: #dc3545; /* Eliminar */
+}
+#productsContainer li .actions button:hover {
+    opacity: 0.9;
+}
+#productsContainer li .actions button.delete-button:hover {
+    background-color: #c82333;
+}
+
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 25px;
+    border: 1px solid #888;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#modalHistoricalData {
+    background-color: #e9e9e9;
+    padding: 10px;
+    border-radius: 4px;
+    white-space: pre-wrap; /* Mantiene saltos de línea y espacios */
+    word-wrap: break-word; /* Rompe palabras largas */
+    max-height: 200px;
+    overflow-y: auto;
+}
