@@ -186,6 +186,10 @@ app.delete('/api/productos/:id', async (req, res) => {
     	}
 });
 
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 // Iniciar el servidor
 app.listen(port, async () => {
     	console.log(`Accede al catálogo en: http://localhost:${port}`);
